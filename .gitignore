@@ -1,0 +1,37 @@
+# Claude Code local settings
+.claude/
+
+# Generated outputs (run notebooks to reproduce)
+data/processed/
+models/
+
+# CMAPSSData/ is a duplicate of data/raw/ — track only data/raw/
+CMAPSSData/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.Python
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
