@@ -282,6 +282,7 @@ def run_preprocessing_pipeline(
     raw_dir: str | Path,
     output_dir: str | Path,
     fd_id: Literal["FD001", "FD002", "FD003", "FD004"],
+    models_dir: str | Path | None = None,
     n_conditions: int | None = None,
     rul_cap: int = RUL_CAP,
     val_fraction: float = 0.2,
@@ -303,10 +304,24 @@ def run_preprocessing_pipeline(
      11. Save parquet files + artifacts
 
     Returns dict with fitted artifacts: km, scalers, feature_cols.
+
+    Parameters
+    ----------
+    models_dir : directory where kmeans.joblib and scalers.joblib are saved.
+                 If None, defaults to <output_dir>/../../models/<fd_id>
+                 (i.e. sibling of the data/ folder at the project root).
     """
     raw_dir = Path(raw_dir)
     output_dir = Path(output_dir)
-    models_dir = output_dir.parent / "models" / fd_id
+
+    if models_dir is None:
+        # output_dir is expected to be  <root>/data/processed
+        # so two levels up brings us to <root>, then into models/
+        _models_root = output_dir.parent.parent / "models"
+    else:
+        _models_root = Path(models_dir)
+
+    models_dir = _models_root / fd_id
     models_dir.mkdir(parents=True, exist_ok=True)
 
     if n_conditions is None:
